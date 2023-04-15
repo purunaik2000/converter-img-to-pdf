@@ -1,8 +1,9 @@
+require('dotenv').config({ path: require('find-config')('.env') })
 const aws = require('aws-sdk');
 
 aws.config.update({
-    accessKeyId: "AKIAXYKQ4YESHSPOA6F6",
-    secretAccessKey: "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",
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_KEY,
     region: "ap-south-1"
 });
 

@@ -19,6 +19,7 @@
   "dependencies": {
     "aws-sdk": "^2.1350.0",
     "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
     "jsonwebtoken": "^9.0.0",
     "lambda-multipart-parser": "^1.0.1",
     "mysql": "^2.18.1"
