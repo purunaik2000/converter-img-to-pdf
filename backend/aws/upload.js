@@ -1,19 +1,18 @@
 const aws = require('aws-sdk');
 
 aws.config.update({
-    accessKeyId: "AKIAY3L35MCRZNIRGT6N",
-    secretAccessKey: "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",
+    accessKeyId: "AKIAXYKQ4YESHSPOA6F6",
+    secretAccessKey: "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",
     region: "ap-south-1"
 });
 
-exports.uploadFile = async (file) => {
+module.exports.uploadFile = async (file) => {
     return new Promise(function (resolve, reject) {
 
-        const s3 = new aws.S3({ apiVersion: '2006-03-01' });
+        const s3 = new aws.S3({apiVersion: "2012-10-17"});
 
         const uploadParams = {
-            ACL: "public-read",
-            Bucket: "classroom-training-bucket",
+            Bucket: "intern-aws-project",
             Key: Date.now() + file.filename,
             "ContentType": "image/png",
             Body: file.content

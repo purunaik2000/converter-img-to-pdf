@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.login {
+  overflow: hidden;
+}
+
+.form-container {
+  height: 95vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #3f5bfb, #fc466b);
+  top: 0vh;
+  position: relative;
+  z-index: 0;
+}
+
+.form {
+  height: auto;
+  width: min(95vw, 600px);
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 40px;
+  color: white;
+}
+
+h1 {
+    margin-top: 2vh;
+    margin-bottom: 4vh;
+    text-shadow: #3f5bfb;
+}
+
+.row {
+  font-size: x-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4%;
+  width: min(90%, 500px);
+  font-size: 1.3rem;
+  height: 3.2vh;
+}
+
+label {
+  display: flex;
+  float: left;
+  width: 30%;
+}
+
+input {
+  height: auto;
+  width: 70%;
+  background: transparent;
+  border: 1px solid white;
+  padding: 2%;
+  color: white;
+  font-size: large;
+  border-radius: 10px;
+}
+
+input:focus {
+  outline: none;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: red;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: red;
+}
+
+.btn {
+    width: auto;
+    padding: 2%;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    font-size: large;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.35);
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.btn:hover {
+    box-shadow: 0 8px 64px 0 rgba(62, 76, 270, 0.75);
+}
+
+.btn:active {
+    box-shadow: 0 0 16px #b4b4b4;
+}
+
+.form>:last-child {
+  width: min(90vw, 600px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 411px){
+  label {
+    width: 33%;
+    font-size: medium;
+  }
+  
+  input {
+    width: 67%;
+    font-size: medium;
+  };
+}

@@ -31,18 +31,16 @@ module.exports.login = async (event) => {
     if (!passwordMatch) return sendResponse(400, false, 'Incorrect password');
     const token = jwt.sign(
         {
-            userId: user[0].id,
+            userId: user[0].user_id,
             name: user[0].name
         },
-        'secret-signature',
-        {
-            expiresIn: '1h'
-        }
+        'secret-signature'
     )
     const data = {
-        userId: user[0].id,
+        userId: user[0].user_id,
         name: user[0].name,
         email: user[0].email,
+        mobile: user[0].mobile,
         token: token
     }
     return sendResponse(200, true, 'Logged in successfully', data);
