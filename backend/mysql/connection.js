@@ -1,3 +1,5 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 var mysql      = require('mysql');
 // Dev-connection
 // var connection = mysql.createConnection({
@@ -11,7 +13,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'img2pdf.cytvbvbmlzrr.ap-south-1.rds.amazonaws.com',
   user     : 'admin',
-  password : 'img2pdf123',
+  password : process.env.DATABASE_PASS,
   database : 'img2pdf'
 });
  

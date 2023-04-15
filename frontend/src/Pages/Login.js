@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate } from "react-router-dom";
 
 import Alert from '../components/Alert';
@@ -10,6 +10,7 @@ export default function Login() {
   const [profile, setProfile] = useState({ name: '', email: '', mobile: '', password: ''});
   const [registered, setRegistered] = useState(true);
   const [alert, setAlert] = useState('');
+  const [firstLogin, setFirstLogin] = useState(false);
 
   const url = 'http://localhost:3000/dev/users/';
   const user = JSON.parse(localStorage.getItem('user'));
@@ -28,7 +29,8 @@ export default function Login() {
         console.log('Success:', val);
         setAlert(val.message)
         if (val.status) {
-          setTimeout(() => localStorage.setItem('user', JSON.stringify(val.data)), 1000)
+          setTimeout(() => localStorage.setItem('user', JSON.stringify(val.data)), 1000);
+          setTimeout(()=>setFirstLogin(true), 1000);
         }
       })
       .catch((error) => {
@@ -72,7 +74,8 @@ export default function Login() {
 
   return (
     <div className='login'>
-      {user && <Navigate to="/user" replace={true} />}
+      {firstLogin && <Navigate to="/" replace={true} />}
+      {!firstLogin && user && <Navigate to="/user" replace={true} />}
       {registered && <div className='form-container'>
         <div className='form'>
           <h1>Login</h1>

@@ -1,4 +1,5 @@
-require('dotenv').config({ path: require('find-config')('.env') })
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const aws = require('aws-sdk');
 
 aws.config.update({

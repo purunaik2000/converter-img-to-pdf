@@ -17,7 +17,7 @@ export default function Navbar() {
                 </li>
                 <li>
                     <Link className="link" to="/history">
-                        History
+                        Collection
                     </Link>
                 </li>
                 <li>

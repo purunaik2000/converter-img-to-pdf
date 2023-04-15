@@ -43,6 +43,33 @@
     text-align: left;
   }
 
+  .select-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .select {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    border: 1px solid aliceblue;
+    border-radius: 10px;
+    padding: 1%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .select:hover {
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.35);
+  }
+
+  .selected {
+    border: 2px solid greenyellow;
+  }
+
   .rename-button, .download-btn {
     visibility: hidden;
     font-size: small;
