@@ -7,6 +7,7 @@
   justify-content: center;
   background: linear-gradient(to right, #3f5bfb, #fc466b);
   color: white;
+  z-index: 0;
 }
 
 h1 {

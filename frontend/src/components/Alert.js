@@ -12,7 +12,7 @@ export default function Alert({ msg, set, imageId }) {
       document.getElementById(imageId+'0').innerText = newName;
         (async () => {
           const user = await JSON.parse(localStorage.getItem('user'));
-          await fetch('http://localhost:3000/dev/images/history/renameCollection', {
+          await fetch('http://localhost:3000/dev/images/renameCollection', {
             method: "POST",
             headers: {
               Authorization: `Bearer ${user.token}`,
