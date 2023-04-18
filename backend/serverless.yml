@@ -62,48 +62,36 @@ plugins:
   - serverless-offline
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          path: /test
-          method: get
-          template: application/json
   createUser:
     handler: ./controllers/user.createUser
     events:
       - http:
           path: /users/register
           method: post
-          template: application/json
   login:
     handler: ./controllers/user.login
     events:
       - http:
           path: /users/login
           method: post
-          template: application/json
   upload:
     handler: ./controllers/image.upload
     events:
       - http:
           path: /images/upload
           method: post
-          template: multipart/form-data
   getImages:
     handler: ./controllers/image.getImages
     events:
       - http:
           path: /images/history
           method: get
-          templete: application/json
   renameCollection:
     handler: ./controllers/image.renameCollection
     events:
       - http:
           path: /images/renameCollection
           method: post
-          templete: application/json
   
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

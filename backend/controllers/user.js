@@ -8,6 +8,8 @@ module.exports.createUser = async (event) => {
     let { name, email, mobile, password } = body;
     const fields = ['name', 'email', 'mobile', 'password'];
     for (let field of fields) if (!body[field]) return sendResponse(400, false, `Please provide ${field}`);
+    if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/.test(email)) return sendResponse(400, false, 'Invalid email');
+    if(!/^[6-9][0-9]{9}$/.test(mobile)) return sendResponse(400, false, 'Invalid mobile');
     let user = await db.do('select * from user where email=? or mobile=?', [email, mobile]);
     if (user.length) {
         if (user[0].email == email) return sendResponse(400, false, `${email} is already registered`);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import {jsPDF} from 'jspdf';
+import { jsPDF } from 'jspdf';
 import Alert from "../components/Alert";
 import "./History.css";
 
@@ -31,9 +31,9 @@ export default function History() {
     const blob = await data.blob();
     return new Promise((resolve) => {
       const reader = new FileReader();
-      reader.readAsDataURL(blob); 
+      reader.readAsDataURL(blob);
       reader.onloadend = () => {
-        const base64data = reader.result;   
+        const base64data = reader.result;
         resolve(base64data);
       }
     });
@@ -44,58 +44,72 @@ export default function History() {
     setAlert('Rename');
   }
 
-  async function download(e, image_id){
-    const images = history.find(e=>e.image_id===image_id);
-    if(images?.urls?.length){
+  async function download(e, image_id) {
+    const images = history.find(e => e.image_id === image_id);
+    if (images?.urls?.length) {
       console.log(images)
-        let pdf = new jsPDF('landscape', 'pt', 'a5');
-        for(let i=0;i<images.urls.length;i++){
-          let base64 = await getBase64FromUrl(images.urls[i].image_url);
-          pdf.addImage(base64, 'PNG', 8, 9, 580, 400);
-          if(i<images.urls.length-1) pdf.addPage();
-        }
-        pdf.save('new-pdf.pdf');
+      let pdf = new jsPDF('landscape', 'pt', 'a5');
+      for (let i = 0; i < images.urls.length; i++) {
+        let base64 = await getBase64FromUrl(images.urls[i].image_url);
+        pdf.addImage(base64, 'PNG', 8, 9, 580, 400);
+        if (i < images.urls.length - 1) pdf.addPage();
       }
+      pdf.save('new-pdf.pdf');
+    }
   }
 
-  async function downloadSelected(){
-    console.log(selected);
-    if(selected.length){
-        let pdf = new jsPDF('landscape', 'pt', 'a5');
-        for(let i=0;i<selected.length;i++){
-          let base64 = await getBase64FromUrl(selected[i].image_url);
-          pdf.addImage(base64, 'PNG', 8, 9, 580, 400);
-          if(i<selected.length-1) pdf.addPage();
-        }
-        pdf.save('new-pdf.pdf');
-      }
-      setSelected([]);
-      let images = document.getElementsByName('image');
-      if(images){
-        for(let e of images){
-          e.classList.remove('selected');
-        }
-      }
+  async function downloadSelected() {
+    // console.log(selected);
+    // if (selected.length) {
+    //   let pdf = new jsPDF('landscape', 'pt', 'a5');
+    //   for (let i = 0; i < selected.length; i++) {
+    //     let base64 = await getBase64FromUrl(selected[i].image_url);
+    //     pdf.addImage(base64, 'PNG', 8, 9, 580, 400);
+    //     if (i < selected.length - 1) pdf.addPage();
+    //   }
+    //   pdf.save('new-pdf.pdf');
+    // }
+    // setSelected([]);
+    // let images = document.getElementsByName('image');
+    // if (images) {
+    //   for (let e of images) {
+    //     e.classList.remove('selected');
+    //   }
+    // }
+    await fetch('http://localhost:3000/dev/images/convert',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({images: selected}),
+    })
+      .then((response) => response.json())
+      .then((val) => {
+        console.log('Success:', val);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
-  async function selectImage(e, index1, index2, image_url_id){
-    if(!selected.length){
+  async function selectImage(e, index1, index2, image_url_id) {
+    if (!selected.length) {
       setSelected([history[index1].urls[index2]]);
       e.target.classList.add('selected');
       console.log(selected.length);
       return;
     }
     let index = -1;
-    for(let i=0;i<selected.length;i++){
-      if(selected[i].image_url_id===image_url_id){
-        index=i;
+    for (let i = 0; i < selected.length; i++) {
+      if (selected[i].image_url_id === image_url_id) {
+        index = i;
         break;
       }
     }
-    if(index===-1){
+    if (index === -1) {
       setSelected([...selected, history[index1].urls[index2]]);
       e.target.classList.add('selected');
-    }else{
+    } else {
       let temp = [...selected];
       temp.splice(index, 1);
       setSelected(temp);
@@ -120,7 +134,7 @@ export default function History() {
             console.log("Success:", val);
             if (val.status) {
               setHistory(val.data);
-            }else setAlert(val.message);
+            } else setAlert(val.message);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -132,16 +146,19 @@ export default function History() {
   return (
     <div className="history">
       {!user && <Navigate to="/login" replace={true} />}
-      {user && history && <div>
-        <div className="select-container"><div onClick={()=>setIsSelect(!isSelect)} className="select">Select</div>
-        <div onClick={downloadSelected} className="select selected-download-btn">Download</div></div>
-        {isSelect && 
-          history.map((e,ind1)=>{
-            return e.urls.map((img, ind2)=>{
-              return <img onClick={event=>selectImage(event, ind1, ind2, img.image_url_id)} src={img.image_url} name='image' alt='' />
+      {user && history && <div className='outer-container' >
+        <div className="select-container">
+          <div onClick={() => setIsSelect(!isSelect)} className="select">Select</div>
+          <div onClick={downloadSelected} className="select selected-download-btn">Download</div>
+        </div>
+        {isSelect && <div className="images-container"> {
+          history.map((e, ind1) => {
+            return e.urls.map((img, ind2) => {
+              return <img onClick={event => selectImage(event, ind1, ind2, img.image_url_id)} src={img.image_url} name='image' alt='' />
             })
-          })
-          }
+          })}
+          </div>
+        }
         {!isSelect &&
           history.map(e => {
             return <div key={e?.image_id} className="inner-container">
