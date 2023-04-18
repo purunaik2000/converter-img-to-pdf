@@ -59,37 +59,23 @@ export default function History() {
   }
 
   async function downloadSelected() {
-    // console.log(selected);
-    // if (selected.length) {
-    //   let pdf = new jsPDF('landscape', 'pt', 'a5');
-    //   for (let i = 0; i < selected.length; i++) {
-    //     let base64 = await getBase64FromUrl(selected[i].image_url);
-    //     pdf.addImage(base64, 'PNG', 8, 9, 580, 400);
-    //     if (i < selected.length - 1) pdf.addPage();
-    //   }
-    //   pdf.save('new-pdf.pdf');
-    // }
-    // setSelected([]);
-    // let images = document.getElementsByName('image');
-    // if (images) {
-    //   for (let e of images) {
-    //     e.classList.remove('selected');
-    //   }
-    // }
-    await fetch('http://localhost:3000/dev/images/convert',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({images: selected}),
-    })
-      .then((response) => response.json())
-      .then((val) => {
-        console.log('Success:', val);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    console.log(selected);
+    if (selected.length) {
+      let pdf = new jsPDF('landscape', 'pt', 'a5');
+      for (let i = 0; i < selected.length; i++) {
+        let base64 = await getBase64FromUrl(selected[i].image_url);
+        pdf.addImage(base64, 'PNG', 8, 9, 580, 400);
+        if (i < selected.length - 1) pdf.addPage();
+      }
+      pdf.save('new-pdf.pdf');
+    }
+    setSelected([]);
+    let images = document.getElementsByName('image');
+    if (images) {
+      for (let e of images) {
+        e.classList.remove('selected');
+      }
+    }
   }
 
   async function selectImage(e, index1, index2, image_url_id) {
